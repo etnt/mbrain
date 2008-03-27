@@ -1,6 +1,15 @@
 %%%-------------------------------------------------------------------
 %%% Created : 27 Mar 2008 by Torbjorn Tornkvist <tobbe@tornkvist.org>
 %%% Desc.   : An Erlang 'rev-proxy'/dispatcher ting.
+%%%
+%%%    Run your Yaws web server as a front-end to your various
+%%%    Erlang applications. The server should be named with
+%%%    '-sname mbrain' Each Yaws-server spec. should point to 
+%%%    the corresponding docroot, where the applications yaws files
+%%%    resides. Each Yaws file should only contain a call to
+%%%    mbrain:call/4, which will make an Erlang rpc to that
+%%%    node. Each application should at startup time run 
+%%%    mbrain:ping/0 to connect to the mbrain node.
 %%%-------------------------------------------------------------------
 -module(mbrain).
 
