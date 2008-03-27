@@ -23,12 +23,15 @@ ping() ->
 
 
 call(Node, Mod, Fun, Args) when is_atom(Node) ->
-    SNode = a2l(Node),
+    call([Node], Mod, Fun, Args);
+
+call(Nodes, Mod, Fun, Args) when is_list(Nodes) ->
+    SNodes = [a2l(S) || S <- Nodes],
     Ls = [nn_split(X) || X <- nodes()],
     Ns = [nn_join([N,H]) || [N,H] <- Ls,
-                            N == SNode],
+                            lists:member(N,SNodes) == true],
     if (Ns /= []) -> rpc:call(random_pick(Ns), Mod, Fun, Args);
-       true       -> exit({no_node_found, Node})
+       true       -> exit({no_node_found, Nodes})
     end.
     
 
