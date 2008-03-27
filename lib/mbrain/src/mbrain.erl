@@ -10,15 +10,19 @@
 
 ping() ->
     [_,Host] = nn_split(node()),
-    net_adm:ping(nn_join([?MBRAIN,Host])).
+    net_adm:ping(nn_join([a2l(?MBRAIN),Host])).
 
 
-call(Node, Mod, Fun, Args) ->
+call(Node, Mod, Fun, Args) when is_atom(Node) ->
+    SNode = a2l(Node),
     Ls = [nn_split(X) || X <- nodes()],
     Ns = [nn_join([N,H]) || [N,H] <- Ls,
-                            N == Node],
-    NodeName = random_pick(Ns),
-    rpc:call(NodeName, Mod, Fun, Args).
+                            N == SNode],
+    if (Ns /= []) -> rpc:call(random_pick(Ns), Mod, Fun, Args);
+       true       -> exit({no_node_found, Node})
+    end.
+    
+
 
 
 random_pick([N]) -> N;
@@ -33,5 +37,8 @@ nn_split(NodeName) when is_atom(NodeName) ->
 
 nn_join([Node,Host]) when is_list(Node),is_list(Host) ->
     list_to_atom(Node++"@"++Host).
-            
+     
+a2l(A) when is_atom(A) -> atom_to_list(A).
+
+    
         
