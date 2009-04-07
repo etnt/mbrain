@@ -97,7 +97,7 @@ loop_watcher(Node, Secs) ->
 %%%
 %%% <pre>
 %%% % Inside example.yaws
-%%% out(Arg) -> mbrain:call(mynode@myhost, example_yaws, out, [Arg]).
+%%% out(Arg) -> mbrain:call(mynode, example_yaws, out, [Arg]).
 %%% </pre>
 %%% @end
 %%% --------------------------------------------------------------------
