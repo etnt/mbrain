@@ -1,4 +1,0 @@
-{['mbrain'],
- [{outdir,"../ebin"},debug_info]}.
-
-
