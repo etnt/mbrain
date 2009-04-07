@@ -27,7 +27,7 @@
 
 -define(MBRAIN, ?MODULE).
 
--define(minute,    60).             % seconds
+-define(minute,    60*1000).        % milli seconds
 -define(hour,      60 * ?minute).
 
 
