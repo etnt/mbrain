@@ -32,7 +32,7 @@
 
 
 %%% --------------------------------------------------------------------
-%%% @spec ping() -> pong | pang
+%%% @spec ping() -> pid()
 %%%
 %%% @doc Will setup a connection to the 'mbrain' frontend node on the same Host.
 %%%      A watcher process will be started that will ensure that the 
@@ -55,8 +55,8 @@ ping(Host) when is_list(Host) ->
     [_,Host] = nn_split(node()),
     Mbrain = nn_join([a2l(?MBRAIN),Host]),
     case net_adm:ping(Mbrain) of
-        pong=X -> start_lazy_watcher(Mbrain),X;
-        pang=X -> start_eager_watcher(Mbrain),X
+        pong -> start_lazy_watcher(Mbrain);
+        pang -> start_eager_watcher(Mbrain)
     end.
 
 start_lazy_watcher(Node) ->

@@ -38,6 +38,12 @@ their own. It also results in that no traditional rev-proxy work,
 a la nginx, is needed. And as the final touch; it also makes it 
 possible to implement a simple form of load balancing. 
 
+The only thing that the backend node(s) need to do is to 
+call the *mbrain:ping()* function (or *mbrain:ping(Host)* ).
+This will setup a connection to the *mbrain* node and a
+watcher process will be started that ensures that this
+connection will stay up. 
+
 Isn't Erlang wonderful :-)
 
 --Tobbe
